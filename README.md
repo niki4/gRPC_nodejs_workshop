@@ -14,7 +14,7 @@ Client supports CLI, that means you can run it and pass args directly from your 
 To run server simply invoke it like:
 ```bash
 $ node server.js
-(node:6696) DeprecationWarning: grpc.load: Use the @grpc/proto-loader module with grpc.loadPackageDefinition instead
+...
 ```
 
 Get Book by ID:
