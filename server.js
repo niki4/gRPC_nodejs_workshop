@@ -17,7 +17,10 @@ server.addService(booksProto.books.BookService.service, {
 		callback(null, books);
 	},
 	insert: function(call, callback) {
-		books.push(call.request);
+		book = call.request;
+		books.push(book);
+		if (bookStream)
+			bookStream.write(book);
 		callback(null, {});
 	},
 	get: function(call, callback) {
