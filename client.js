@@ -38,3 +38,11 @@ function deleteBook(id) {
 		printResponse(error, empty);
 	});
 }
+
+function watchBooks() {
+	var call = client.watch({});
+	// func callback will run on each book insert
+	call.on('data', function(book) {
+		console.log(book);
+	});
+}
