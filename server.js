@@ -7,6 +7,8 @@ var books = [
     { id: 123, title: 'A Tale of Two Cities', author: 'Charles Dickens' }
 ];
 
+var bookStream;
+
 var server = new grpc.Server();
 
 // Request handlers
@@ -15,7 +17,10 @@ server.addService(booksProto.books.BookService.service, {
 		callback(null, books);
 	},
 	insert: function(call, callback) {
-		books.push(call.request);
+		book = call.request;
+		books.push(book);
+		if (bookStream)
+			bookStream.write(book);
 		callback(null, {});
 	},
 	get: function(call, callback) {
@@ -38,7 +43,10 @@ server.addService(booksProto.books.BookService.service, {
 			code: grpc.status.NOT_FOUND,
 			details: 'Not found'
 		});
-	}
+	},
+	watch: function(stream) {
+		bookStream = stream;
+	},
 });
 
 server.bind('0.0.0.0:50051',
