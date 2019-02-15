@@ -9,9 +9,14 @@ var books = [
 
 var server = new grpc.Server();
 
+// Request handlers
 server.addService(booksProto.books.BookService.service, {
 	list: function(call, callback) {
 		callback(null, books);
+	},
+	insert: function(call, callback) {
+		books.push(call.request);
+		callback(null, {});
 	}
 });
 
